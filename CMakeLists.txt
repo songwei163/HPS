@@ -3,4 +3,4 @@ project(HPS)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(HPS main.cpp)
+add_executable(byteorder byteorder.cpp)
