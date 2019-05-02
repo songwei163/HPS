@@ -33,7 +33,7 @@ int main (int argc, char *argv[])
   struct sockaddr_in serv_address;
   memset (&serv_address, 0, sizeof (serv_address));
   serv_address.sin_family = AF_INET;
-  serv_address.sin_port = port;
+  serv_address.sin_port = htons (port);
   inet_pton (AF_INET, ip, &serv_address.sin_addr);
 
   Bind (listenfd, (struct sockaddr *) &serv_address, sizeof (serv_address));
