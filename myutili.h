@@ -8,6 +8,7 @@
 
 #define LISTEN_QUEUE 5
 #define BUF_SIZE 1024
+#define BUFFER_SIZE 512
 
 
 /*C库函数调用*/
@@ -24,7 +25,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-#include <libgen.h>
+//#include <libgen.h>
 
 /*Linux网络编程调用*/
 

@@ -3,9 +3,11 @@ project(HPS)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(byteorder byteorder.cpp test_accept.cpp oobsend.cpp oobrecv.cpp reuse_address.cpp)
+add_executable(byteorder byteorder.cpp set_send_buf.cpp set_recv_buf.cpp)
 add_executable(test_listen test_listen.cpp myutili.h)
-add_executable(test_accept test_listen.cpp myutili.h)
+add_executable(test_accept test_accept.cpp myutili.h)
 add_executable(oobsend oobsend.cpp myutili.h)
 add_executable(oobrecv oobrecv.cpp myutili.h)
 add_executable(reuse_address reuse_address.cpp myutili.h)
+add_executable(set_send_buf set_send_buf.cpp myutili.h)
+add_executable(set_recv_buf set_recv_buf.cpp myutili.h)
