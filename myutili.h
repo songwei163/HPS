@@ -6,6 +6,10 @@
 #ifndef HPS_MYUTILI_H
 #define HPS_MYUTILI_H
 
+#define LISTEN_QUEUE 5
+#define BUF_SIZE 1024
+
+
 /*C库函数调用*/
 
 #include <cstdio>
@@ -52,7 +56,7 @@ void Bind (int sockfd, const struct sockaddr *addr, socklen_t addrlen)
 {
   if (bind (sockfd, addr, addrlen) == -1)
     {
-      fprintf (stderr, "bind faliure, errno: %s", strerror (errno));
+      fprintf (stderr, "bind failure, errno: %s\n", strerror (errno));
       exit (EXIT_FAILURE);
     }
 }
@@ -61,7 +65,7 @@ void Listen (int sockfd, int backlog)
 {
   if (listen (sockfd, backlog) == -1)
     {
-      fprintf (stderr, "listen faliure, errno: %s", strerror (errno));
+      fprintf (stderr, "listen failure, errno: %s\n", strerror (errno));
       exit (EXIT_FAILURE);
     }
 }
@@ -72,11 +76,41 @@ int Accept (int sockfd, struct sockaddr *addr, socklen_t *addrlen)
 
   if ((ret = accept (sockfd, addr, addrlen)) == -1)
     {
-      fprintf (stderr, "accept faliure, errno: %s", strerror (errno));
+      fprintf (stderr, "accept failure, errno: %s\n", strerror (errno));
       exit (EXIT_FAILURE);
     }
 
   return ret;
 }
 
+void Connect (int sockfd, const struct sockaddr *addr, socklen_t addrlen)
+{
+  if (connect (sockfd, addr, addrlen) == -1)
+    {
+      fprintf (stderr, "connect failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+}
+
+void Send (int sockfd, const char *buf, size_t len, int flags)
+{
+  if (send (sockfd, buf, len, flags) == -1)
+    {
+      fprintf (stderr, "send failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+}
+
+int Recv (int sockfd, void *buf, size_t len, int flags)
+{
+  int ret = 0;
+
+  if ((ret = recv (sockfd, buf, len, flags)) == -1)
+    {
+      fprintf (stderr, "recv failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+
+  return ret;
+}
 #endif //HPS_MYUTILI_H
