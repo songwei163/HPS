@@ -20,7 +20,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 
-
 #include <libgen.h>
 
 /*Linux网络编程调用*/
@@ -40,7 +39,7 @@ int Socket (int family, int type, int protocol)
 {
   int ret = 0;
 
-  if ((ret == socket (family, type, protocol)) < 0)
+  if ((ret = socket (family, type, protocol)) < 0)
     {
       perror ("socket");
       exit (EXIT_FAILURE);
@@ -51,8 +50,7 @@ int Socket (int family, int type, int protocol)
 
 void Bind (int sockfd, const struct sockaddr *addr, socklen_t addrlen)
 {
-  int ret = 0;
-  if ((ret == bind (sockfd, addr, addrlen)) == -1)
+  if (bind (sockfd, addr, addrlen) == -1)
     {
       fprintf (stderr, "bind faliure, errno: %s", strerror (errno));
       exit (EXIT_FAILURE);
@@ -61,13 +59,24 @@ void Bind (int sockfd, const struct sockaddr *addr, socklen_t addrlen)
 
 void Listen (int sockfd, int backlog)
 {
-  int ret = 0;
-  if ((ret == listen (sockfd, backlog)) == -1)
-  {
-    fprintf (stderr, "bind faliure, errno: %s", strerror (errno));
-    exit (EXIT_FAILURE);
-  }
+  if (listen (sockfd, backlog) == -1)
+    {
+      fprintf (stderr, "listen faliure, errno: %s", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
 }
 
+int Accept (int sockfd, struct sockaddr *addr, socklen_t *addrlen)
+{
+  int ret = 0;
+
+  if ((ret = accept (sockfd, addr, addrlen)) == -1)
+    {
+      fprintf (stderr, "accept faliure, errno: %s", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+
+  return ret;
+}
 
 #endif //HPS_MYUTILI_H
