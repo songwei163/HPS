@@ -1,5 +1,6 @@
 //
 // Created by s on 19-5-2.
+//  自定义编写头文件
 //
 
 #ifndef HPS_MYUTILI_H
@@ -12,12 +13,13 @@
 #include <cstring>
 #include <cerrno>
 #include <cassert>
+#include <csignal>
 
 /*Linux系统编程调用*/
 
 #include <unistd.h>
 #include <fcntl.h>
-#include <signal.h>
+
 
 #include <libgen.h>
 
