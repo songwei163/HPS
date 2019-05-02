@@ -10,8 +10,6 @@
 
 #include "myutili.h"
 
-#define LISTEN_QUEUE 5
-
 int main (int argc, char *argv[])
 {
   if (argc <= 2)
@@ -31,6 +29,7 @@ int main (int argc, char *argv[])
   serv_addr.sin_port = htons (port);
 
   Bind (listenfd, (struct sockaddr *) &serv_addr, sizeof (serv_addr));
+
   Listen (listenfd, LISTEN_QUEUE);
 
   struct sockaddr_in cli_addr;
