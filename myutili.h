@@ -37,6 +37,7 @@
 #include <sys/poll.h>
 #include <pthread.h>
 #include <sys/select.h>
+#include <netdb.h>
 
 /*常用函数封装*/
 
@@ -109,6 +110,45 @@ int Recv (int sockfd, void *buf, size_t len, int flags)
   if ((ret = recv (sockfd, buf, len, flags)) == -1)
     {
       fprintf (stderr, "recv failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+
+  return ret;
+}
+
+struct hostent *Gethostbyname (const char *name)
+{
+  struct hostent *ret = NULL;
+
+  if ((ret = gethostbyname (name)) == NULL)
+    {
+      fprintf (stderr, "gethostbyname failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+
+  return ret;
+}
+
+struct servent *Getservbyname (const char *name, const char *proto)
+{
+  struct servent *ret = NULL;
+
+  if ((ret = getservbyname (name, proto)) == NULL)
+    {
+      fprintf (stderr, "getservbyname failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+
+  return ret;
+}
+
+int Read (int fd, void *buf, size_t count)
+{
+  int ret = 0;
+
+  if ((ret = read (fd, buf, count)) == -1)
+    {
+      fprintf (stderr, "read failure, errno: %s\n", strerror (errno));
       exit (EXIT_FAILURE);
     }
 
