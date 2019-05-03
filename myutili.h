@@ -26,6 +26,7 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/uio.h>
+#include <sys/sendfile.h>
 
 //#include <libgen.h>
 
@@ -167,10 +168,10 @@ int Dup (int oldfd)
       exit (EXIT_FAILURE);
     }
 
-    return newfd;
+  return newfd;
 }
 
-int Start_TCPserver_up(const char* ip, int port)
+int Start_TCPserver_up (const char *ip, int port)
 {
   int listenfd = Socket (AF_INET, SOCK_STREAM, 0);
   struct sockaddr_in serv_addr;
@@ -186,12 +187,38 @@ int Start_TCPserver_up(const char* ip, int port)
   return listenfd;
 }
 
-void Stat(const char* pathname, struct stat* statbuf)
+void Stat (const char *pathname, struct stat *statbuf)
 {
-  if(stat(pathname,statbuf)==-1)
+  if (stat (pathname, statbuf) == -1)
     {
       fprintf (stderr, "stat failure, errno: %s\n", strerror (errno));
       exit (EXIT_FAILURE);
     }
+}
+
+int Open (const char *pathname, int flags)
+{
+  int ret = 0;
+
+  if ((ret = open (pathname, flags)) == -1)
+    {
+      fprintf (stderr, "open failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+
+  return ret;
+}
+
+int Sendfile (int out_fd, int in_fd, off_t *offset, size_t count)
+{
+  int ret = 0;
+
+  if ((ret = sendfile (out_fd, in_fd, offset, count)) == -1)
+    {
+      fprintf (stderr, "sendfile failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+
+  return ret;
 }
 #endif //HPS_MYUTILI_H
