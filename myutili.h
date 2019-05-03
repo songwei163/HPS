@@ -196,11 +196,11 @@ void Stat (const char *pathname, struct stat *statbuf)
     }
 }
 
-int Open (const char *pathname, int flags)
+int Open (const char *pathname, int flags, mode_t mode)
 {
   int ret = 0;
 
-  if ((ret = open (pathname, flags)) == -1)
+  if ((ret = open (pathname, flags, mode)) == -1)
     {
       fprintf (stderr, "open failure, errno: %s\n", strerror (errno));
       exit (EXIT_FAILURE);
@@ -221,4 +221,44 @@ int Sendfile (int out_fd, int in_fd, off_t *offset, size_t count)
 
   return ret;
 }
+
+int Pipe (int pipefd[2])
+{
+  int ret = 0;
+
+  if ((ret = pipe (pipefd)) == -1)
+    {
+      fprintf (stderr, "pipe failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+
+  return ret;
+}
+
+ssize_t Splice (int fd_in, loff_t *off_in, int fd_out, loff_t *off_out, size_t len, unsigned int flags)
+{
+  ssize_t ret = 0;
+
+  if ((ret == splice (fd_in, off_in, fd_out, off_out, len, flags)) == -1)
+    {
+      fprintf (stderr, "pipe failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+
+  return ret;
+}
+
+ssize_t Tee (int fd_in, int fd_out, size_t len, unsigned int flags)
+{
+  ssize_t ret = 0;
+
+  if ((ret = tee (fd_in, fd_out, len, flags)) == -1)
+    {
+      fprintf (stderr, "tee failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+
+  return ret;
+}
+
 #endif //HPS_MYUTILI_H
