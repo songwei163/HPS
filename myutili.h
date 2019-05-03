@@ -24,6 +24,8 @@
 
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/stat.h>
+#include <sys/uio.h>
 
 //#include <libgen.h>
 
@@ -166,5 +168,30 @@ int Dup (int oldfd)
     }
 
     return newfd;
+}
+
+int Start_TCPserver_up(const char* ip, int port)
+{
+  int listenfd = Socket (AF_INET, SOCK_STREAM, 0);
+  struct sockaddr_in serv_addr;
+  memset (&serv_addr, 0, sizeof (serv_addr));
+  serv_addr.sin_family = AF_INET;
+  inet_pton (AF_INET, ip, &serv_addr.sin_addr);
+  serv_addr.sin_port = htons (port);
+
+  Bind (listenfd, (struct sockaddr *) &serv_addr, sizeof (serv_addr));
+
+  Listen (listenfd, LISTEN_QUEUE);
+
+  return listenfd;
+}
+
+void Stat(const char* pathname, struct stat* statbuf)
+{
+  if(stat(pathname,statbuf)==-1)
+    {
+      fprintf (stderr, "stat failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
 }
 #endif //HPS_MYUTILI_H
