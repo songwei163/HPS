@@ -8,7 +8,7 @@ static const char *status_line[2] = {"200 OK", "500 Internal server error"};
 
 int main (int argc, char *argv[])
 {
-  if (argc <= 2)
+  if (argc <= 3)
     {
       printf ("usage: %s ip_address port_number filename\n", basename (argv[0]));
       exit (EXIT_FAILURE);
