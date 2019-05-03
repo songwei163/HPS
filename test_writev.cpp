@@ -81,6 +81,10 @@ int main (int argc, char *argv[])
       ret = snprintf (header_buf + len, BUFFER_SIZE - 1 - len, "%s", "\r\n");
       send (connfd, header_buf, strlen (header_buf), 0);
     }
+  close (connfd);
+  delete[] file_buf;
 
+  close (listenfd);
+  return 0;
 }
 
