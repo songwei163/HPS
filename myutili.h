@@ -154,4 +154,17 @@ int Read (int fd, void *buf, size_t count)
 
   return ret;
 }
+
+int Dup (int oldfd)
+{
+  int newfd = 0;
+
+  if ((newfd = dup (oldfd)) == -1)
+    {
+      fprintf (stderr, "read failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+
+    return newfd;
+}
 #endif //HPS_MYUTILI_H
