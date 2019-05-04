@@ -27,7 +27,7 @@ void lt (epoll_event *events, int number, int epollfd, int listenfd)
         {
           struct sockaddr_in client_address;
           socklen_t client_addrlength = sizeof (client_address);
-          int connfd = accept (listenfd, (struct sockaddr *) &client_address, &client_addrlength);
+          int connfd = Accept (listenfd, (struct sockaddr *) &client_address, &client_addrlength);
           addfd (epollfd, connfd, false);
         }
       else if (events[i].events & EPOLLIN)
@@ -59,7 +59,7 @@ void et (epoll_event *events, int number, int epollfd, int listenfd)
         {
           struct sockaddr_in client_address;
           socklen_t client_addrlength = sizeof (client_address);
-          int connfd = accept (listenfd, (struct sockaddr *) &client_address, &client_addrlength);
+          int connfd = Accept (listenfd, (struct sockaddr *) &client_address, &client_addrlength);
           addfd (epollfd, connfd, true);
         }
       else if (events[i].events & EPOLLIN)
