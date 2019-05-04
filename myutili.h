@@ -324,18 +324,5 @@ bool daemonize ()
   return true;
 }
 
-int Select (int nfds, fd_set *readfds, fd_set *writefds,
-            fd_set *exceptfds, struct timeval *timeout)
-{
-  int ret = 0;
-
-  if ((ret = select (nfds, readfds, writefds, exceptfds, timeout)) == -1)
-    {
-      fprintf (stderr, "select failure, errno: %s\n", strerror (errno));
-      exit (EXIT_FAILURE);
-    }
-
-  return ret;
-}
 
 #endif //HPS_MYUTILI_H
