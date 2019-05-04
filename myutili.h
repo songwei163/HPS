@@ -11,6 +11,10 @@
 #define BUFFER_SIZE 512
 #define MAX_EVENT_NUMBER 1024
 
+#define USER_LIMIT 5
+#define BUFFER_SIZE 64
+#define FD_LIMIT 65535
+
 /*C库函数调用*/
 
 #include <cstdio>
@@ -41,6 +45,7 @@
 #include <pthread.h>
 #include <sys/select.h>
 #include <netdb.h>
+#include <poll.h>
 
 /*常用函数封装*/
 
