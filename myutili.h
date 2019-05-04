@@ -15,6 +15,10 @@
 #define BUFFER_SIZE 64
 #define FD_LIMIT 65535
 
+#define MAX_EVENT_NUMBER 1024
+#define TCP_BUFFER_SIZE 512
+#define UDP_BUFFER_SIZE 1024
+
 /*C库函数调用*/
 
 #include <cstdio>
