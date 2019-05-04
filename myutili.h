@@ -9,7 +9,7 @@
 #define LISTEN_QUEUE 5
 #define BUF_SIZE 1024
 #define BUFFER_SIZE 512
-
+#define MAX_EVENT_NUMBER 1024
 
 /*C库函数调用*/
 
@@ -322,6 +322,14 @@ bool daemonize ()
   open ("/dev/null", O_RDWR);
   open ("/dev/null", O_RDWR);
   return true;
+}
+
+int setnonblocking (int fd)
+{
+  int old_option = fcntl (fd, F_GETFL);
+  int new_option = old_option | O_NONBLOCK;
+  fcntl (fd, F_SETFL, new_option);
+  return old_option;
 }
 
 
