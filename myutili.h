@@ -27,6 +27,7 @@
 #include <cerrno>
 #include <cassert>
 #include <csignal>
+#include <ctime>
 
 /*Linux系统编程调用*/
 
