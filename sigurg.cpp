@@ -25,7 +25,7 @@ void sig_urg (int sig)
 void addsig (int sig, void(*sig_handler) (int))
 {
   struct sigaction sa;
-  memset (sa, '\0', sizeof (sa));
+  memset (&sa, '\0', sizeof (sa));
   sa.sa_handler = sig_handler;
   sa.sa_flags |= SA_RESTART;
   sigfillset (&sa.sa_mask);
