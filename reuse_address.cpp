@@ -21,7 +21,7 @@ int main (int argc, char *argv[])
 
   int listenfd = Socket (AF_INET, SOCK_STREAM, 0);
   int reuse = 1;
-  setsockopt (listenfd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof (reuse));
+  Setsockopt (listenfd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof (reuse));
 
   struct sockaddr_in serv_addr;
   memset (&serv_addr, 0, sizeof (serv_addr));

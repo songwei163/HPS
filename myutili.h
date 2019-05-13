@@ -368,4 +368,54 @@ int Socketpair (int domain, int type, int protocol, int sv[2])
   return ret;
 }
 
+int Setsockopt (int sockfd, int level, int optname, const void *optval, socklen_t optlen)
+{
+  int ret = 0;
+
+  if ((ret = setsockopt (sockfd, level, optname, optval, optlen)) == -1)
+    {
+      fprintf (stderr, "setsockopt failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+
+  return ret;
+}
+
+/*超时连接函数*/
+int timeout_connect (const char *ip, int port, int time)
+{
+  int ret = 0;
+  struct sockaddr_in address;
+  memset (&address, 0, sizeof (address));
+  address.sin_family = AF_INET;
+  inet_pton (AF_INET, ip, &address.sin_addr);
+  address.sin_port = htons (port);
+
+  int sockfd = Socket (AF_INET, SOCK_STREAM, 0);
+
+  /*通过选项SO_RCVTIMEO和SO_SNDTIMEO所设置的超时时间的类型是timeval，这和
+   * select系统调用的超时参数类型相同*/
+  struct timeval timeout;
+  timeout.tv_sec = time;
+  timeout.tv_usec = 0;
+  socklen_t len = sizeof (timeout);
+
+  Setsockopt (sockfd, SOL_SOCKET, SO_SNDTIMEO, &timeout, len);
+
+  ret = connect (sockfd, (struct sockaddr *) &address, sizeof (address));
+  if (ret == -1)
+    {
+      /*超时对应的错误号时EINPROGRESS,如果下面的条件成立，我们就可以处理定时任务了*/
+      if (errno == EINPROGRESS)
+        {
+          printf ("connecting timeoutm process timeout logic \n");
+          exit (EXIT_FAILURE);
+        }
+
+      printf ("error occur when connecting to server\n");
+      exit (EXIT_FAILURE);
+    }
+  return sockfd;
+}
+
 #endif //HPS_MYUTILI_H
