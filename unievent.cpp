@@ -49,6 +49,8 @@ int main (int argc, char *argv[])
   int port = atoi (argv[2]);
 
   int listenfd = Start_TCPserver_up (ip, port);
+  int reuse = 1;
+  setsockopt (listenfd, SOL_SOCKET, SO_REUSEADDR, &reuse, sizeof (reuse));
 
   epoll_event events[MAX_EVENT_NUMBER];
   int epollfd = Epoll_create (5);
