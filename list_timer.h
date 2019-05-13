@@ -27,10 +27,10 @@ class util_timer {
   {}
  public:
   time_t expire;  /*任务超时时间，这里使用绝对时间*/
-  void (*cb_func (client_data *));  /*任务回调函数*/
+  void (*cb_func) (client_data *);  /*任务回调函数*/
 
   /*回调函数处理的客户数据，由定时器的执行者传递给回调函数*/
-  client_data *uer_data;
+  client_data *user_data;
   util_timer *prev;
   util_timer *next;
 };
@@ -184,7 +184,7 @@ class sort_timer_lst {
           }
 
           /*调用定时器的回调函数，以执行定时任务*/
-        temp->cb_func (temp->uer_data);
+        temp->cb_func (temp->user_data);
         /*执行完定时器中的定时任务之后，就将它从链表中删除，并重置链表头结点*/
         head = temp->next;
         if (head != nullptr)

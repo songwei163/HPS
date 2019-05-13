@@ -131,9 +131,9 @@ int Recv (int sockfd, void *buf, size_t len, int flags)
 
 struct hostent *Gethostbyname (const char *name)
 {
-  struct hostent *ret = NULL;
+  struct hostent *ret = nullptr;
 
-  if ((ret = gethostbyname (name)) == NULL)
+  if ((ret = gethostbyname (name)) == nullptr)
     {
       fprintf (stderr, "gethostbyname failure, errno: %s\n", strerror (errno));
       exit (EXIT_FAILURE);
@@ -144,9 +144,9 @@ struct hostent *Gethostbyname (const char *name)
 
 struct servent *Getservbyname (const char *name, const char *proto)
 {
-  struct servent *ret = NULL;
+  struct servent *ret = nullptr;
 
-  if ((ret = getservbyname (name, proto)) == NULL)
+  if ((ret = getservbyname (name, proto)) == nullptr)
     {
       fprintf (stderr, "getservbyname failure, errno: %s\n", strerror (errno));
       exit (EXIT_FAILURE);
