@@ -333,6 +333,7 @@ bool daemonize ()
   return true;
 }
 
+/*设置文件描述符fd非阻塞*/
 int setnonblocking (int fd)
 {
   int old_option = fcntl (fd, F_GETFL);
@@ -341,5 +342,30 @@ int setnonblocking (int fd)
   return old_option;
 }
 
+int Epoll_create (int size)
+{
+  int ret = 0;
+
+  if ((ret = epoll_create (size)) == -1)
+    {
+      fprintf (stderr, "epoll_create failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+
+  return ret;
+}
+
+int Socketpair (int domain, int type, int protocol, int sv[2])
+{
+  int ret = 0;
+
+  if ((ret = socketpair (domain, type, protocol, sv)) == -1)
+    {
+      fprintf (stderr, "socketpair failure, errno: %s\n", strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+
+  return ret;
+}
 
 #endif //HPS_MYUTILI_H
